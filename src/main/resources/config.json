@@ -1,0 +1,41 @@
+{
+	"models" : [ "book","store","location"],
+	
+	"book": {
+		"xpath": "name(/book)",
+		"value": "book",
+		"getAsString": {
+			"title": "/book/author/text()",
+			"lang": "/book/title/@lang"
+		},
+		"getAsInteger": {
+			"year": "/book/year/text()"
+		},
+		"getAsDobule": {
+			"price": "/book/price/text()"
+		},
+		"getNodeSet": {
+			"authors": "/book/author/text()"
+		},
+		"getInnerObjects": {
+			"Contributors": "contributor"
+		}
+	},
+	"contributor":{
+			"getAsString":{
+				"name":"//*[local-name()='contributor']/name/text()",
+				"country":"//*[local-name()='contributor']/country/text()"
+			}
+
+	},
+	
+	"store":{
+		"xpath": "name(/store)",
+		"value": "store"
+	},
+	"location":{
+		"xpath": "name(/location)",
+		"value": "location"
+	}
+
+}
