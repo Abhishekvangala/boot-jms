@@ -5,7 +5,7 @@
 		"xpath": "name(/book)",
 		"value": "book",
 		"getAsString": {
-			"title": "/book/author/text()",
+			"title": "/book/title/text()",
 			"lang": "/book/title/@lang"
 		},
 		"getAsInteger": {

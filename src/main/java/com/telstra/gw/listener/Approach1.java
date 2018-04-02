@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.telstra.gw.conf.Config;
 import com.telstra.gw.parser1.XpathParser;
+import com.telstra.gw.sender.ResponseSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -27,11 +28,15 @@ public class Approach1 {
     private XpathParser xpathParser;
     @Autowired
     private Config config;
+
+    @Autowired
+    private ResponseSender responseSender;
+
     @JmsListener(destination = "private.queue2")
     public void handleMessage(String message){
 
         JsonObject config = this.config.getConfig();
-
+        JsonObject convertedJson = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
 
@@ -43,11 +48,17 @@ public class Approach1 {
                 JsonObject model = config.getAsJsonObject(element.getAsString());
                 String evaluate = model.get("xpath").getAsString();
                 if(xpathParser.evaluateModel(doc,evaluate,model.get("value").getAsString())){
-                    System.out.println(xpathParser.parse(config,doc,element.getAsString()));
+                    convertedJson = xpathParser.parse(config,doc,element.getAsString());
+                    System.out.println(convertedJson);
                     break;
                 }
             }
+
+
+            //TOdo for Resetful web service and capture response for query and response.
+
             //System.out.println(xpathParser.parse(config,doc,"book"));
+            responseSender.sendMessage(convertedJson.toString());
         }catch(ParserConfigurationException | IOException | SAXException e){
             e.printStackTrace();
         }

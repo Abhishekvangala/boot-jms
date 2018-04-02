@@ -33,7 +33,7 @@ public class XpathParser {
             retrival = model.getAsJsonObject("getAsString").entrySet();
             for (Map.Entry<String, JsonElement> element : retrival) {
                 String value = fetcher.getString(element.getValue().getAsString(), xmlInput);
-                if (value != null) parsedObject.addProperty(element.getKey(), value);
+                if (value != null && ! value.isEmpty()) parsedObject.addProperty(element.getKey(), value);
             }
         }
 
@@ -61,8 +61,11 @@ public class XpathParser {
                 JsonArray array = new JsonArray();
                 for (int i = 0; i < nodeSet.getLength(); i++) {
                     Node node = nodeSet.item(i);
+                    if(! node.getNodeValue().isEmpty())
                     array.add(node.getNodeValue().trim());
                 }
+
+                if(array.size()>0)
                 parsedObject.add(element.getKey(), array);
             }
         }
@@ -73,6 +76,8 @@ public class XpathParser {
 
             for (Map.Entry<String, JsonElement> element : retrival) {
                 String innerObject = element.getValue().getAsString();
+                JsonObject innerJsonObject = parse(config, xmlInput, innerObject);
+                if(innerJsonObject != null && innerJsonObject.entrySet().size()  > 0)
                 parsedObject.add(element.getKey(), parse(config, xmlInput, innerObject));
 
             }
