@@ -17,7 +17,7 @@ import java.io.StringReader;
 public class JAXbXPath {
 
     //private final Logger logger = LoggerFactory.getLogger(JAXbXPath.class);
-    public void parse(String message) {
+    public void parse(String message) { // XML Message Object
         try {
             System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
@@ -25,18 +25,25 @@ public class JAXbXPath {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             StringReader reader = new StringReader(message);
             Object book =  unmarshaller.unmarshal(reader);
+
+            // If there is no change in Names then we can directly parse
+            // the XML without any intervention then below would work
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
             marshaller.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
             marshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, false);
             marshaller.marshal(book,System.out);
 
+            // To specify the field name as required , we follow below approach.
             Gson gson = new Gson();
             JsonObject object = gson.toJsonTree(book).getAsJsonObject();
             System.out.println("Converted using GSON "+object.toString());
         }catch(JAXBException e){
             //System.out.println(e.getStackTrace());
             e.printStackTrace();
+        }
+        finally {
+            // Release the objects
         }
 
     }

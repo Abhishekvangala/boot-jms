@@ -1,10 +1,21 @@
 {
-	"models" : [ "book","store","location"],
+	"models" : ["submitTrobuleTicket", "book","store","location"],
+
+	"submitTrobuleTicket" : {
+		"xpath": "//*[local-name()='IncidentTicket']/type/text()",
+		"value": "Service Request",
+		"getAsString": {
+			"interactionId": "//*[local-name()='IncidentTicket']/AccessSeekerInteraction/ID/text()",
+			"severity": "//*[local-name()='IncidentTicket']/severity/text()",
+			"type": "//*[local-name()='IncidentTicket']/type/text()"
+		}
+	},
 	
 	"book": {
 		"xpath": "name(/book)",
 		"value": "book",
 		"getAsString": {
+			"root": "name(/book)",
 			"title": "/book/title/text()",
 			"lang": "/book/title/@lang"
 		},
@@ -16,6 +27,9 @@
 		},
 		"getNodeSet": {
 			"authors": "/book/author/text()"
+		},
+		"getInnerObjects": {
+			"Contributors": "contributor"
 		},
 		"getInnerObjects": {
 			"Contributors": "contributor"

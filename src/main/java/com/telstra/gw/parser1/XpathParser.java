@@ -87,7 +87,7 @@ public class XpathParser {
 
 
     public boolean evaluateModel(Document dom,String evaluate,String value){
-
+        System.out.println("Inside evaluateModel");
      return fetcher.evaluateModel(evaluate,dom,value);
     }
 

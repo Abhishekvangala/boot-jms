@@ -23,7 +23,7 @@ import javax.jms.ConnectionFactory;
 @EnableJms
 @SpringBootApplication
 @ComponentScan(basePackages = "com.telstra.gw")
-public class Application {
+public class Application extends Exception {
 
   //  private final Logger logger = LoggerFactory.getLogger(Application.class);
   /*  @Bean public ConnectionFactory connectionFactory(){

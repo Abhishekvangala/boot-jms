@@ -1,0 +1,8 @@
+FROM openjdk:8-jre-alpine
+
+RUN mkdir -p /opt/mediation
+
+COPY target/*.jar /opt/mediation/app.jar
+
+CMD ["/usr/bin/java", "-jar",  "/opt/mediation/app.jar", "com.telstra.gw.app.Application"]
+

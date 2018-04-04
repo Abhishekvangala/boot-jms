@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 public class ReadMessage {
     @Autowired
     private JAXbXPath jaXbXPath;
-    @JmsListener(destination = "private.queue1")
-    public void handleMessage(String message){
+    @JmsListener(destination = "private.queue1") // Source is CBR ;Migration queue; ; Target is B2BGW
+    public void handleMessage(String message){  // XML Message Object is input (Header & Body )
         jaXbXPath.parse(message);
     }
 }
