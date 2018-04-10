@@ -1,7 +1,8 @@
 package com.telstra.gw.app;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -24,6 +25,24 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.telstra.gw")
 public class Application extends Exception {
+	
+	
+	/*  static {
+		    new Thread(() -> {
+
+		    	Server server = new Server(8080);
+		      ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		      context.setContextPath("/");
+		      server.setHandler(context);
+
+		      try {
+		        server.start();
+		        server.join();
+		      } catch (Exception e) {
+		        e.printStackTrace();
+		      }
+		    }).start();
+		  }*/
 
   //  private final Logger logger = LoggerFactory.getLogger(Application.class);
   /*  @Bean public ConnectionFactory connectionFactory(){
@@ -39,6 +58,7 @@ public class Application extends Exception {
         //core poll size=4 threads and max poll size 8 threads
         return factory;
     }
+    
 */
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfiguration(){

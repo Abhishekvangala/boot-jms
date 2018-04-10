@@ -1,55 +1,89 @@
 {
-	"models" : ["submitTrobuleTicket", "book","store","location"],
-
-	"submitTrobuleTicket" : {
-		"xpath": "//*[local-name()='IncidentTicket']/type/text()",
-		"value": "Service Request",
-		"getAsString": {
-			"interactionId": "//*[local-name()='IncidentTicket']/AccessSeekerInteraction/ID/text()",
-			"severity": "//*[local-name()='IncidentTicket']/severity/text()",
-			"type": "//*[local-name()='IncidentTicket']/type/text()"
+	"models" : ["responseSingleSiteQualification","submitTrobuleTicket", "book","store","location"],
+	
+	"_comment":"Serves as Model schema",
+	
+	"modelschema":{
+		"requestSingleSiteQualification":{
+			"xpath":"",
+			"value":"",
+			"getInnerObjects":{
+				"product":"product"		
+			}
+		},
+		"submitTrobuleTicket" : {
+			"xpath": "//*[local-name()='IncidentTicket']/type/text()",
+			"value": "Service Request",
+			"getAsString": {
+				"interactionId": "//*[local-name()='IncidentTicket']/AccessSeekerInteraction/ID/text()",
+				"severity": "//*[local-name()='IncidentTicket']/severity/text()",
+				"type": "//*[local-name()='IncidentTicket']/type/text()"
+				}
+			},
+		"book": {
+			"xpath": "name(/book)",
+			"value": "book",
+			"getAsString": {
+				"root": "name(/book)",
+				"title": "/book/title/text()",
+				"lang": "/book/title/@lang"
+			},
+			"getAsInteger": {
+				"year": "/book/year/text()"
+			},
+			"getAsDobule": {
+				"price": "/book/price/text()"
+			},
+			"getNodeSet": {
+				"authors": "/book/author/text()"
+			},
+			"getInnerObjects": {
+				"Contributors": "contributor"
+			}	
+		},
+		
+		"store":{
+			"xpath": "name(/store)",
+			"value": "store"
+		},
+		"location":{
+			"xpath": "name(/location)",
+			"value": "location"
 		}
 	},
 	
-	"book": {
-		"xpath": "name(/book)",
-		"value": "book",
-		"getAsString": {
-			"root": "name(/book)",
-			"title": "/book/title/text()",
-			"lang": "/book/title/@lang"
-		},
-		"getAsInteger": {
-			"year": "/book/year/text()"
-		},
-		"getAsDobule": {
-			"price": "/book/price/text()"
-		},
-		"getNodeSet": {
-			"authors": "/book/author/text()"
-		},
-		"getInnerObjects": {
-			"Contributors": "contributor"
-		},
-		"getInnerObjects": {
-			"Contributors": "contributor"
-		}
-	},
-	"contributor":{
+	
+	"innerObjectsSchema":{
+	
+		"_commets":"Nested objects schema goes here",
+		"contributor":{
 			"getAsString":{
 				"name":"//*[local-name()='contributor']/name/text()",
 				"country":"//*[local-name()='contributor']/country/text()"
 			}
-
+		},
+		"product":{
+			"getNestedArrayofObjects":{
+				"productDetails":{ 
+					"listXpath":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/DescribedBy",
+					"model":"productDetails"
+				}
+			}
+		}
 	},
 	
-	"store":{
-		"xpath": "name(/store)",
-		"value": "store"
-	},
-	"location":{
-		"xpath": "name(/location)",
-		"value": "location"
+	
+	"nestedObjectsSchema":{
+		"_commets":"Nested array objects schema goes here",	
+		"productDetails":{
+			"self":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/DescribedBy[${0}]",
+			"getAsString":{
+				"name":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/DescribedBy[${0}]/characteristic/name/text()",
+				"type":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/SpecifiedBy/type/text()",
+				"value":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/DescribedBy[${0}]/value/text()"
+			}
+		}
 	}
-
+	
+	
 }

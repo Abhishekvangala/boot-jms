@@ -20,6 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Date;
 
 /**
  * Created by abhishek.vangala on 3/28/2018.
@@ -31,8 +32,8 @@ public class Approach1 {
     @Autowired
     private Config config;
 
-    @Autowired
-    private ResponseSender responseSender;
+   /* @Autowired
+    private ResponseSender responseSender;*/
 
     @JmsListener(destination = "private.queue2")
     public void handleMessage(ActiveMQTextMessage message){
@@ -40,6 +41,7 @@ public class Approach1 {
         JsonObject config = this.config.getConfig();
         JsonObject convertedJson = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        System.out.println("Started : "+new Date().getTime());
         try {
             System.out.println("Received message with Id "+message.getJMSMessageID());
             //String xmlString = message.getStringProperty("body");
@@ -61,8 +63,8 @@ public class Approach1 {
             //TOdo for Resetful web service and capture response for query and response.
 
             //System.out.println(xpathParser.parse(config,doc,"book"));
-            responseSender.sendMessage(convertedJson.toString());
-            System.out.println("Message has been sent");
+           // responseSender.sendMessage(convertedJson.toString());
+            System.out.println("Ended : "+new Date().getTime());
         }catch(ParserConfigurationException | IOException | SAXException |JMSException e){
             e.printStackTrace();
         }
