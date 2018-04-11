@@ -1,6 +1,36 @@
 {
-	"models" : ["submitTrobuleTicket", "book","store","location"],
-
+	"models" : ["responseSingleSiteQualification","submitTrobuleTicket", "book","store","location"],
+	
+	"responseSingleSiteQualification":{
+		"xpath":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesLocation/type/text()",
+		"value":"NBNLocationID",
+		"getAsString":{
+		"locationId":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesLocation/Place/ID",
+		"productSpecificationType":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/SpecifiedBy/type"
+		},
+		
+		"getInnerObjects":{
+			"product":"product"		
+		}
+	},
+	"product":{
+		"getArrayofJsonObjects":{
+			"productDetails":{ 
+				"listXpath":"//*[local-name()='ServiceQualificationComprisedOf']/ItemInvolvesProduct/DescribedBy",
+				"model":"productDetails"
+			}
+		}
+	},
+	
+	"productDetails":{
+		"getAsString":{
+			"name":"Characteristic/name/text()",
+			"type":"SpecifiedBy/type/text()",
+			"value":"value/text()",
+			"lan":"./@lang"
+		}
+		
+	},
 	"submitTrobuleTicket" : {
 		"xpath": "//*[local-name()='IncidentTicket']/type/text()",
 		"value": "Service Request",
@@ -30,10 +60,7 @@
 		},
 		"getInnerObjects": {
 			"Contributors": "contributor"
-		},
-		"getInnerObjects": {
-			"Contributors": "contributor"
-		}
+		}	
 	},
 	"contributor":{
 			"getAsString":{
@@ -51,5 +78,8 @@
 		"xpath": "name(/location)",
 		"value": "location"
 	}
+	
+	
+	
 
 }

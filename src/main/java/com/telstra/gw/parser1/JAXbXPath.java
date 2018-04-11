@@ -28,11 +28,11 @@ public class JAXbXPath {
 
             // If there is no change in Names then we can directly parse
             // the XML without any intervention then below would work
-            Marshaller marshaller = jaxbContext.createMarshaller();
+            /*Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
             marshaller.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
             marshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, false);
-            marshaller.marshal(book,System.out);
+            marshaller.marshal(book,System.out);*/
 
             // To specify the field name as required , we follow below approach.
             Gson gson = new Gson();

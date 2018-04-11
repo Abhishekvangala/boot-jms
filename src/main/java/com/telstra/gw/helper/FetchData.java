@@ -5,6 +5,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.Iterator;
+
+import javax.annotation.PostConstruct;
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.*;
 
 /**
@@ -13,9 +17,10 @@ import javax.xml.xpath.*;
 @Component
 public class FetchData {
 
-    XPath xpath =  XPathFactory.newInstance().newXPath();
+    XPath xpath = null;
+    
 
-    public NodeList getNodeList(String expression, Document doc) {
+	public NodeList getNodeList(String expression, Node doc) {
         try {
             XPathExpression exper = xpath.compile(expression);
             return (NodeList) exper.evaluate(doc, XPathConstants.NODESET);
@@ -25,7 +30,7 @@ public class FetchData {
         return null;
     }
 
-    public  String getString(String expression, Document doc) {
+    public  String getString(String expression, Node doc) {
         try {
             XPathExpression exper = xpath.compile(expression);
             String value = (String) exper.evaluate(doc, XPathConstants.STRING);
@@ -37,7 +42,7 @@ public class FetchData {
 
     }
 
-    public Node getNode(String expression, Document doc) {
+    public Node getNode(String expression, Node doc) {
         try {
             XPathExpression exper = xpath.compile(expression);
             return (Node) exper.evaluate(doc, XPathConstants.NODE);
@@ -49,7 +54,7 @@ public class FetchData {
     }
 
 
-    public  Double getNumber(String expression, Document doc) {
+    public  Double getNumber(String expression, Node doc) {
         try {
             XPathExpression exper = xpath.compile(expression);
             return (Double) exper.evaluate(doc, XPathConstants.NUMBER);
@@ -60,7 +65,7 @@ public class FetchData {
 
     }
 
-    public  Boolean getBoolean(String expression, Document doc) {
+    public  Boolean getBoolean(String expression, Node doc) {
         try {
             XPathExpression exper = xpath.compile(expression);
             return (Boolean) exper.evaluate(doc, XPathConstants.BOOLEAN);
@@ -73,10 +78,11 @@ public class FetchData {
 
 
 
-    public  Boolean evaluateModel(String expression,Document doc, String value) {
+    public  Boolean evaluateModel(String expression,Node doc, String value) {
         try {
             XPathExpression exper = xpath.compile(expression);
             String xmlValue =   (String) exper.evaluate(doc, XPathConstants.STRING);
+            System.out.println("Inside evaluate"+xmlValue);
             if(value.equalsIgnoreCase(xmlValue)) return true;
 
         } catch (XPathExpressionException ex) {
@@ -84,5 +90,29 @@ public class FetchData {
         }
         return false;
 
+    }
+    
+    @PostConstruct
+    public void init() {
+    	this.xpath = XPathFactory.newInstance().newXPath();
+    	    
+    	    
+    	    NamespaceContext ctx = new NamespaceContext() {
+    	        public String getNamespaceURI(String prefix) {
+    	            if ("v20".equals(prefix)) {
+    	                return "testNS1";
+    	            } else if ("xsi".equals(prefix)) {
+    	                return "http://www.w3.org/2001/XMLSchema-instance";
+    	            }
+    	            return null;
+    	        }
+    	        public String getPrefix(String uri) {
+    	            throw new UnsupportedOperationException();
+    	        }
+    	        public Iterator getPrefixes(String uri) {
+    	            throw new UnsupportedOperationException();
+    	        }
+    	    };
+    	    xpath.setNamespaceContext(ctx);
     }
 }
