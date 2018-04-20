@@ -1,8 +1,22 @@
-FROM openjdk:8-jre-alpine
-
-RUN mkdir -p /opt/mediation
-
-COPY target/*.jar /opt/mediation/app.jar
-
-CMD ["/usr/bin/java", "-jar",  "/opt/mediation/app.jar", "com.telstra.gw.app.Application"]
+FROM openjdk:8-jdk-alpine
+#helps in installing curl tar packages for installation of maven
+RUN apk add --no-cache curl tar bash
+ARG MAVEN_VERSION=3.3.9
+ARG USER_HOME_DIR="/root"
+#donloads maven and unzips it
+RUN mkdir -p /usr/share/maven && \
+curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -xzC /usr/share/maven --strip-components=1 && \
+ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+ENV MAVEN_HOME /usr/share/maven
+# speed up Maven JVM a bit
+ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+# ----
+# make source folder
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
+RUN cd /usr/src/app/
+#run mvn clean install for generation of jar file
+RUN mvn -e clean install
+CMD ["/usr/bin/java", "-jar",  "/usr/src/app/target/mdbmedition-1.0-SNAPSHOT.jar", "com.telstra.gw.app.Application"]
 

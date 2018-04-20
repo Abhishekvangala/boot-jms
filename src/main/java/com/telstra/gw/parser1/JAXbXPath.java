@@ -3,6 +3,8 @@ package com.telstra.gw.parser1;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.telstra.gw.models.Book;
+import com.telstra.gw.models.LocationID;
+
 import org.eclipse.persistence.jaxb.MarshallerProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ public class JAXbXPath {
         try {
             System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(Book.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(LocationID.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             StringReader reader = new StringReader(message);
             Object book =  unmarshaller.unmarshal(reader);

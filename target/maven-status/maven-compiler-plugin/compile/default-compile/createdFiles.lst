@@ -1,0 +1,17 @@
+com\telstra\gw\models\Product.class
+com\telstra\gw\helper\CreateMessage.class
+learning\Staticload.class
+com\telstra\gw\parser1\JAXbXPath.class
+com\telstra\gw\app\Application.class
+com\telstra\gw\models\LocationID.class
+com\telstra\gw\models\ProductDetails.class
+com\telstra\gw\helper\FetchData$1.class
+com\telstra\gw\parser1\XpathParser.class
+com\telstra\gw\conf\Config.class
+com\telstra\gw\listener\Approach1.class
+com\telstra\gw\helper\FetchData.class
+com\telstra\gw\sender\ResponseSender.class
+com\telstra\gw\app\Application$1.class
+com\telstra\gw\models\Book.class
+com\telstra\gw\sender\ResponseSender$1.class
+com\telstra\gw\listener\ReadMessage.class
