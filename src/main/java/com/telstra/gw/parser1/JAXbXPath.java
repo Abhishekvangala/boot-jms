@@ -1,16 +1,18 @@
 package com.telstra.gw.parser1;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.telstra.gw.models.Book;
-import com.telstra.gw.models.LocationID;
+import java.io.StringReader;
 
-import org.eclipse.persistence.jaxb.MarshallerProperties;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import javax.xml.bind.*;
-import java.io.StringReader;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.telstra.gw.helper.CommonUtils;
+import com.telstra.gw.models.SoapXmlEnvelope;
 
 /**
  * Created by abhishek.vangala on 3/22/2018.
@@ -18,35 +20,38 @@ import java.io.StringReader;
 @Component
 public class JAXbXPath {
 
-    //private final Logger logger = LoggerFactory.getLogger(JAXbXPath.class);
-    public void parse(String message) { // XML Message Object
-        try {
-            System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
+	private final Logger logger = LoggerFactory.getLogger(JAXbXPath.class);
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(LocationID.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            StringReader reader = new StringReader(message);
-            Object book =  unmarshaller.unmarshal(reader);
+	public void parse(String testMessage) { 
+		try {
+			System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
-            // If there is no change in Names then we can directly parse
-            // the XML without any intervention then below would work
-            /*Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
-            marshaller.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
-            marshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, false);
-            marshaller.marshal(book,System.out);*/
+			
+			JAXBContext jaxbContext = JAXBContext.newInstance(SoapXmlEnvelope.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			StringReader reader = new StringReader(testMessage);
+			Object object = unmarshaller.unmarshal(reader);
 
-            // To specify the field name as required , we follow below approach.
-            Gson gson = new Gson();
-            JsonObject object = gson.toJsonTree(book).getAsJsonObject();
-            System.out.println("Converted using GSON "+object.toString());
-        }catch(JAXBException e){
-            //System.out.println(e.getStackTrace());
-            e.printStackTrace();
-        }
-        finally {
-            // Release the objects
-        }
+			if (object != null) {
+				SoapXmlEnvelope envelope = (SoapXmlEnvelope) object;
+				boolean status = CommonUtils.validateSoapHeaders(envelope);
+				if (status) {
+					Gson gson = new Gson();
+					JsonObject jsonObject = gson.toJsonTree(envelope).getAsJsonObject();
+					logger.info("Converted using GSON " + jsonObject.toString());
+				} else {
+					System.out.println("Returned False ");
+					 CommonUtils.generateSoapFault();
+				}
+			} else {
+				CommonUtils.generateSoapFault();
+			}
+		} catch (Exception e) {
+			// System.out.println(e.getStackTrace());
+			e.printStackTrace();
+		} finally {
+			// Release the objects
+		}
 
-    }
+	}
 }
