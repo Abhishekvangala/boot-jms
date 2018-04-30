@@ -9,8 +9,8 @@ import com.telstra.gw.helper.StringConstants;
 public class SoapXmlEnvelope {
 	@XmlElement(name = "Header", type = SoapEnvelopeHeaders.class, namespace = StringConstants.ENVELOP_NAMESPACE)
 	private SoapEnvelopeHeaders headers;
-	@XmlElement(name = "ManageServiceQualificationRequest", namespace = StringConstants.BODY_NAMESPACE, type = SoapBody.class)
-	private SoapBody soapBody;
+	@XmlElement(name = "Body", type = SoapEnvelopeBody.class, namespace = StringConstants.ENVELOP_NAMESPACE)
+	private SoapEnvelopeBody body;
 
 	public SoapEnvelopeHeaders getHeaders() {
 		return headers;
@@ -20,12 +20,12 @@ public class SoapXmlEnvelope {
 		this.headers = headers;
 	}
 
-	public SoapBody getSoapBody() {
-		return soapBody;
+	public SoapEnvelopeBody getBody() {
+		return body;
 	}
 
-	public void setSoapBody(SoapBody soapBody) {
-		this.soapBody = soapBody;
+	public void setBody(SoapEnvelopeBody body) {
+		this.body = body;
 	}
 
 }
