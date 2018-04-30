@@ -5,6 +5,7 @@ import java.io.StringReader;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,11 +23,10 @@ public class JAXbXPath {
 
 	private final Logger logger = LoggerFactory.getLogger(JAXbXPath.class);
 
-	public void parse(String testMessage) { 
+	public void parse(String testMessage, ActiveMQTextMessage jmsMessage) { 
 		try {
 			System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
-			
 			JAXBContext jaxbContext = JAXBContext.newInstance(SoapXmlEnvelope.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(testMessage);
@@ -36,15 +36,15 @@ public class JAXbXPath {
 				SoapXmlEnvelope envelope = (SoapXmlEnvelope) object;
 				boolean status = CommonUtils.validateSoapHeaders(envelope);
 				if (status) {
+					CommonUtils.generateConversationId(envelope, jmsMessage);
 					Gson gson = new Gson();
 					JsonObject jsonObject = gson.toJsonTree(envelope).getAsJsonObject();
 					logger.info("Converted using GSON " + jsonObject.toString());
 				} else {
-					System.out.println("Returned False ");
-					 CommonUtils.generateSoapFault();
+					// generateSoapFault();
 				}
 			} else {
-				CommonUtils.generateSoapFault();
+				// generateSoapFault();
 			}
 		} catch (Exception e) {
 			// System.out.println(e.getStackTrace());

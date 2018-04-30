@@ -103,7 +103,7 @@ public class Application extends Exception {
         		"</SOAP-ENV:Envelope>";
         
         
-			new JAXbXPath().parse(message);
+        new JAXbXPath().parse(message, null);
         
 //        JmsListenerEndpointRegistry
 //                bean = context.getBean(JmsListenerEndpointRegistry.class);
