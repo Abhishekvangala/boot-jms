@@ -2,6 +2,7 @@ package com.telstra.gw.parser1;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import com.telstra.gw.helper.GetJSONObjects;
 import com.telstra.gw.models.SoapXmlEnvelope;
@@ -11,6 +12,9 @@ public class SendToSQGateway {
 
 	@Autowired
 	public GetJSONObjects getJSONObjects;
+	
+	 @Autowired
+	 private Environment environment;
 	
 	public JSONObject sendToGateway(SoapXmlEnvelope envelope) {
 		System.out.println("envelope"+envelope);
@@ -32,13 +36,13 @@ public class SendToSQGateway {
 		String type = envelope.getBody().getManageServiceQualificationRequest().getType();
 		String url = "";
 		if(type.equalsIgnoreCase("NBNLocationID") || type.equalsIgnoreCase("GNAFID")) {
-			url = "http://localhost:9000/v1/single-site-qualification-loc-id";
+			url = environment.getProperty("EndPoint.locIdUrl");
 		} 		
 		else if(type.equalsIgnoreCase("SpatialGeocode")) {
-			url = "http://localhost:9000/v1/single-site-qualification-geo-code";
+			url =  environment.getProperty("EndPoint.geoCodeUrl");
 		}
 		else {
-			url = "http://localhost:9000/v1/single-site-qualification-physical-address";
+			url =  environment.getProperty("EndPoint.physicalAddressUrl");
 		}
 		return url;
 	}

@@ -14,28 +14,11 @@ import com.telstra.gw.models.SoapXmlEnvelope;
 @SuppressWarnings("unchecked")
 public class GetJSONObjects {
 	
-	private ArrayList<DescribedBy> describedBy = null;
-	JSONObject product = new JSONObject();
 	JSONObject obj = new JSONObject();
-	JSONObject DescribedBy = new JSONObject();
 	
 	public JSONObject getLocationPayload(SoapXmlEnvelope object) {
-		if(object.getBody().getManageServiceQualificationRequest().getProduct()!= null) {
-		describedBy = object.getBody().getManageServiceQualificationRequest().getProduct().getDescribedBy(); 
-		List<JSONObject> describedByArray = new ArrayList<JSONObject>();
+		JSONObject product = getProductDetails(object);
 		
-		ListIterator<DescribedBy> itr = describedBy.listIterator();
-		while(itr.hasNext())
-		{
-			JSONObject jsonObject = new JSONObject();
-			DescribedBy describedBy = itr.next();
-			jsonObject.put("name",describedBy.getName());
-			jsonObject.put("value",describedBy.getValue());
-			describedByArray.add(jsonObject);			
-		}
-		product.put("DescribedBy", describedByArray);
-		product.put("type", object.getBody().getManageServiceQualificationRequest().getProduct().getType());
-		}
 		obj.put("locationId", object.getBody().getManageServiceQualificationRequest().getID());
 		obj.put("gnafId", object.getBody().getManageServiceQualificationRequest().getID());
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
@@ -46,22 +29,8 @@ public class GetJSONObjects {
 	}
 
 	public JSONObject getGeoCodePayload(SoapXmlEnvelope object) {
-		if(object.getBody().getManageServiceQualificationRequest().getProduct()!= null) {
-		describedBy = object.getBody().getManageServiceQualificationRequest().getProduct().getDescribedBy(); 
-		List<JSONObject> describedByArray = new ArrayList<JSONObject>();
+		JSONObject product = getProductDetails(object);
 		
-		ListIterator<DescribedBy> itr = describedBy.listIterator();
-		while(itr.hasNext())
-		{
-			JSONObject jsonObject = new JSONObject();
-			DescribedBy describedBy = itr.next();
-			jsonObject.put("name",describedBy.getName());
-			jsonObject.put("value",describedBy.getValue());
-			describedByArray.add(jsonObject);			
-		}
-		product.put("DescribedBy", describedByArray);
-		product.put("type", object.getBody().getManageServiceQualificationRequest().getProduct().getType());
-		}
 		obj.put("latitude", object.getBody().getManageServiceQualificationRequest().getLatitude());
 		obj.put("longitude", object.getBody().getManageServiceQualificationRequest().getLongitude());
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
@@ -74,25 +43,10 @@ public class GetJSONObjects {
 	public JSONObject getPhysicalAddressPayload(SoapXmlEnvelope object) {
 		
 		PhysicalAddressDetails physicalAddressDetails;
-		
 		physicalAddressDetails =object.getBody().getManageServiceQualificationRequest().getPhysicalAddressDetails();
 		
-		if(object.getBody().getManageServiceQualificationRequest().getProduct()!= null) {
-		describedBy = object.getBody().getManageServiceQualificationRequest().getProduct().getDescribedBy(); 
-		List<JSONObject> describedByArray = new ArrayList<JSONObject>();
+		JSONObject product = getProductDetails(object);
 		
-		ListIterator<DescribedBy> itr = describedBy.listIterator();
-		while(itr.hasNext())
-		{
-			JSONObject jsonObject = new JSONObject();
-			DescribedBy describedBy = itr.next();
-			jsonObject.put("name",describedBy.getName());
-			jsonObject.put("value",describedBy.getValue());
-			describedByArray.add(jsonObject);			
-		}
-		product.put("DescribedBy", describedByArray);
-		product.put("type", object.getBody().getManageServiceQualificationRequest().getProduct().getType());
-		}	
 		obj.put("levelNumber", physicalAddressDetails.getLevelNumber());
 		obj.put("roadNumber1", physicalAddressDetails.getRoadNumber1());
 		obj.put("stateTerritoryCode", physicalAddressDetails.getStateTerritoryCode());
@@ -121,5 +75,29 @@ public class GetJSONObjects {
 		return obj;
 		
 	}
+	
+	public JSONObject getProductDetails(SoapXmlEnvelope object) {
+		ArrayList<DescribedBy> describedBy = null;
+		JSONObject product = new JSONObject();
+		
+		if(object.getBody().getManageServiceQualificationRequest().getProduct()!= null) {
+			describedBy = object.getBody().getManageServiceQualificationRequest().getProduct().getDescribedBy(); 
+			List<JSONObject> describedByArray = new ArrayList<JSONObject>();
+			
+			ListIterator<DescribedBy> itr = describedBy.listIterator();
+			while(itr.hasNext())
+			{
+				JSONObject jsonObject = new JSONObject();
+				DescribedBy describedBy1 = itr.next();
+				jsonObject.put("name",describedBy1.getName());
+				jsonObject.put("value",describedBy1.getValue());
+				describedByArray.add(jsonObject);			
+			}
+			product.put("DescribedBy", describedByArray);
+			product.put("type", object.getBody().getManageServiceQualificationRequest().getProduct().getType());
+			}
+		return product;
+	}
+	
 
 }

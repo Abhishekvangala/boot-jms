@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.JmsListenerEndpointRegistry;
 import org.springframework.web.client.RestTemplate;
 
 import com.telstra.gw.parser1.JAXbXPath;
@@ -63,9 +64,9 @@ public class Application extends Exception {
     }
 
     public static  void  main(String args[]) {
-        AnnotationConfigApplicationContext
+       AnnotationConfigApplicationContext
                 context = new AnnotationConfigApplicationContext(Application.class);
-        String message = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" + 
+      /*  String message = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" + 
         		"    <SOAP-ENV:Header>\n" + 
         		"        <v1:Header xmlns:v1=\"http://www.telstra.com/schemas/soap/header/v1/\">\n" + 
         		"            <v1:transactionID>NotApplicable</v1:transactionID>\n" + 
@@ -96,12 +97,10 @@ public class Application extends Exception {
         
         
         new JAXbXPath().parse(message, null);
-        
-//        JmsListenerEndpointRegistry
-//                bean = context.getBean(JmsListenerEndpointRegistry.class);
-
-
-        SpringApplication.run(Application.class, args);
+*/      
+       SpringApplication.run(Application.class, args);
+       JmsListenerEndpointRegistry
+                bean = context.getBean(JmsListenerEndpointRegistry.class);
 
         /*Runtime.getRuntime().addShutdownHook(new Thread()
         {

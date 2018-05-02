@@ -2,7 +2,9 @@ package com.telstra.gw.models;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "PhysicalAddress", namespace="http://www.nbnco.com.au/cim/manageServiceQualification/v4")
+import com.telstra.gw.helper.StringConstants;
+
+@XmlRootElement(name = "PhysicalAddress", namespace=StringConstants.BODY_NAMESPACE)
 public class PhysicalAddressDetails {
 	private String levelNumber;
 	private String roadNumber1;
