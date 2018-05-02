@@ -1,9 +1,5 @@
 package com.telstra.gw.app;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -11,18 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.config.JmsListenerContainerFactory;
-import org.springframework.jms.config.JmsListenerEndpointRegistry;
-import org.springframework.jms.listener.DefaultMessageListenerContainer;
-import org.springframework.jms.listener.MessageListenerContainer;
+import org.springframework.web.client.RestTemplate;
 
 import com.telstra.gw.parser1.JAXbXPath;
-
-import java.io.IOException;
-
-import javax.jms.ConnectionFactory;
-import javax.xml.soap.SOAPException;
 
 /**
  * Created by orcilia on 21/03/2018.
@@ -68,6 +55,11 @@ public class Application extends Exception {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfiguration(){
         return new PropertySourcesPlaceholderConfigurer();
+    }
+    
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     public static  void  main(String args[]) {

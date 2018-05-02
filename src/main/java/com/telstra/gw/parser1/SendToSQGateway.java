@@ -12,14 +12,10 @@ public class SendToSQGateway {
 	@Autowired
 	public GetJSONObjects getJSONObjects;
 	
-	private String type;	
-	private String url;
-	JSONObject obj = new JSONObject();
-	
 	public JSONObject sendToGateway(SoapXmlEnvelope envelope) {
 		System.out.println("envelope"+envelope);
-		type = envelope.getBody().getManageServiceQualificationRequest().getType();
-		
+		String type = envelope.getBody().getManageServiceQualificationRequest().getType();
+		JSONObject obj = new JSONObject();
 		if(type.equalsIgnoreCase("NBNLocationID") || type.equalsIgnoreCase("GNAFID")) {
 			obj = getJSONObjects.getLocationPayload(envelope);
 		} 
@@ -33,7 +29,8 @@ public class SendToSQGateway {
 	}
 
 	public String getURL(SoapXmlEnvelope envelope) {
-		type = envelope.getBody().getManageServiceQualificationRequest().getType();
+		String type = envelope.getBody().getManageServiceQualificationRequest().getType();
+		String url = "";
 		if(type.equalsIgnoreCase("NBNLocationID") || type.equalsIgnoreCase("GNAFID")) {
 			url = "http://localhost:9000/v1/single-site-qualification-loc-id";
 		} 		
