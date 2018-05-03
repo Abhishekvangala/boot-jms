@@ -46,7 +46,7 @@ public class CommonUtils {
 						: messageId;
 
 				// need to append type of id appended
-				conversationId = "__" + "JMSMessageId";
+				conversationId += "__" + "JMSMessageId";
 				System.out.println("conversationId :: " + conversationId);
 
 				soapHeaders.setId(conversationId);
