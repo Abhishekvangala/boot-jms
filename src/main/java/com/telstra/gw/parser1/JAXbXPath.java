@@ -43,7 +43,8 @@ public class JAXbXPath {
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(testMessage);
 			Object object = unmarshaller.unmarshal(reader);
-
+			System.out.println("envelope"+object);
+			
 			if (object != null) {
 				SoapXmlEnvelope envelope = (SoapXmlEnvelope) object;
 				boolean status = CommonUtils.validateSoapHeaders(envelope);
@@ -61,8 +62,6 @@ public class JAXbXPath {
 			        String response = restTemplate.postForObject(url, entity, String.class);
 					logger.info("Response from Gateway is " + response);
 					
-					logger.info("Converted using GSON " + jsonObject.toString());
-					logger.info("Converted using GSON " + jsonObject.toString());
 				} else {
 					// generateSoapFault();
 				}

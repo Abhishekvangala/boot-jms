@@ -17,12 +17,15 @@ public class SendToSQGateway {
 	 private Environment environment;
 	
 	public JSONObject sendToGateway(SoapXmlEnvelope envelope) {
-		System.out.println("envelope"+envelope);
+		//System.out.println("envelope"+envelope);
 		String type = envelope.getBody().getManageServiceQualificationRequest().getType();
 		JSONObject obj = new JSONObject();
-		if(type.equalsIgnoreCase("NBNLocationID") || type.equalsIgnoreCase("GNAFID")) {
+		if(type.equalsIgnoreCase("NBNLocationID")) {
 			obj = getJSONObjects.getLocationPayload(envelope);
 		} 
+		else if(type.equalsIgnoreCase("GNAFID")) {
+			obj = getJSONObjects.getGnafIdPayload(envelope);
+		}
 		else if(type.equalsIgnoreCase("SpatialGeocode")) {
 			obj = getJSONObjects.getGeoCodePayload(envelope);
 		}

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.telstra.gw.helper.StringConstants;
 
-@XmlRootElement(name = "PhysicalAddress", namespace=StringConstants.BODY_NAMESPACE)
+@XmlRootElement(name = "PhysicalAddress")
 public class PhysicalAddressDetails {
 	private String levelNumber;
 	private String roadNumber1;

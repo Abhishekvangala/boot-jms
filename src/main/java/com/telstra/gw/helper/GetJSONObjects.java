@@ -19,7 +19,17 @@ public class GetJSONObjects {
 	public JSONObject getLocationPayload(SoapXmlEnvelope object) {
 		JSONObject product = getProductDetails(object);
 		
-		obj.put("locationId", object.getBody().getManageServiceQualificationRequest().getID());
+		obj.put("locationId", object.getBody().getManageServiceQualificationRequest().getID());		
+		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
+		obj.put("product", product);
+		
+		return obj;
+		
+	}
+	
+	public JSONObject getGnafIdPayload(SoapXmlEnvelope object) {
+		JSONObject product = getProductDetails(object);
+		
 		obj.put("gnafId", object.getBody().getManageServiceQualificationRequest().getID());
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
 		obj.put("product", product);
@@ -39,7 +49,12 @@ public class GetJSONObjects {
 		return obj;
 		
 	}
-
+	
+	public void createPhysicalAddressPayload(String key,String value ) {
+		if(value != null && value.length() != 0)
+			obj.put(key, value);
+	}
+	
 	public JSONObject getPhysicalAddressPayload(SoapXmlEnvelope object) {
 		
 		PhysicalAddressDetails physicalAddressDetails;
@@ -47,29 +62,33 @@ public class GetJSONObjects {
 		
 		JSONObject product = getProductDetails(object);
 		
-		obj.put("levelNumber", physicalAddressDetails.getLevelNumber());
-		obj.put("roadNumber1", physicalAddressDetails.getRoadNumber1());
-		obj.put("stateTerritoryCode", physicalAddressDetails.getStateTerritoryCode());
-		obj.put("lotNumber", physicalAddressDetails.getLotNumber());
-		obj.put("complexRoadName", physicalAddressDetails.getComplexRoadName());
-		obj.put("postcode",physicalAddressDetails.getPostcode());
-		obj.put("localityName", physicalAddressDetails.getLocalityName());
-		obj.put("roadSuffixCode",physicalAddressDetails.getRoadSuffixCode());
-		obj.put("planNumber", physicalAddressDetails.getPlanNumber());
-		obj.put("unitTypeCode", physicalAddressDetails.getUnitTypeCode());
-		obj.put("complexRoadTypeCode", physicalAddressDetails.getComplexRoadTypeCode());
-		obj.put("complexRoadNumber1", physicalAddressDetails.getComplexRoadNumber1());
-		obj.put("complexRoadNumber2",physicalAddressDetails.getComplexRoadNumber2());
-		obj.put("roadName", physicalAddressDetails.getRoadName());
-		obj.put("roadNumber2",physicalAddressDetails.getRoadNumber2());
-		obj.put("secondaryComplexName",physicalAddressDetails.getSecondaryComplexName());
-		obj.put("unitNumber",physicalAddressDetails.getUnitNumber());
-		obj.put("levelTypeCode",physicalAddressDetails.getLevelTypeCode());
-		obj.put("complexRoadSuffixCode",physicalAddressDetails.getComplexRoadSuffixCode());
-		obj.put("roadTypeCode",physicalAddressDetails.getRoadTypeCode());
-		obj.put("addressSiteName",physicalAddressDetails.getAddressSiteName());
+		createPhysicalAddressPayload("levelNumber", physicalAddressDetails.getLevelNumber());		
+		createPhysicalAddressPayload("roadNumber1", physicalAddressDetails.getRoadNumber1());		
+		createPhysicalAddressPayload("stateTerritoryCode", physicalAddressDetails.getStateTerritoryCode());		
+		createPhysicalAddressPayload("lotNumber", physicalAddressDetails.getLotNumber());		
+		createPhysicalAddressPayload("complexRoadName", physicalAddressDetails.getComplexRoadName());		
+		createPhysicalAddressPayload("postcode",physicalAddressDetails.getPostcode());		
+		createPhysicalAddressPayload("localityName", physicalAddressDetails.getLocalityName());		
+		createPhysicalAddressPayload("roadSuffixCode",physicalAddressDetails.getRoadSuffixCode());
+		createPhysicalAddressPayload("planNumber", physicalAddressDetails.getPlanNumber());
+		createPhysicalAddressPayload("unitTypeCode", physicalAddressDetails.getUnitTypeCode());
+		createPhysicalAddressPayload("complexRoadTypeCode", physicalAddressDetails.getComplexRoadTypeCode());
+		createPhysicalAddressPayload("complexRoadNumber1", physicalAddressDetails.getComplexRoadNumber1());
+		createPhysicalAddressPayload("complexRoadNumber2",physicalAddressDetails.getComplexRoadNumber2());		
+		createPhysicalAddressPayload("roadName", physicalAddressDetails.getRoadName());
+		createPhysicalAddressPayload("roadNumber2",physicalAddressDetails.getRoadNumber2());
+		createPhysicalAddressPayload("secondaryComplexName",physicalAddressDetails.getSecondaryComplexName());
+		createPhysicalAddressPayload("unitNumber",physicalAddressDetails.getUnitNumber());
+		createPhysicalAddressPayload("levelTypeCode",physicalAddressDetails.getLevelTypeCode());
+		createPhysicalAddressPayload("complexRoadSuffixCode",physicalAddressDetails.getComplexRoadSuffixCode());
+		createPhysicalAddressPayload("roadTypeCode",physicalAddressDetails.getRoadTypeCode());
+		createPhysicalAddressPayload("addressSiteName",physicalAddressDetails.getAddressSiteName());
 		
-		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
+		System.out.println(physicalAddressDetails.getRoadName());
+		
+		System.out.println(physicalAddressDetails.getLocalityName());
+		
+		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());		
 		obj.put("product", product);
 		
 		return obj;
@@ -89,15 +108,20 @@ public class GetJSONObjects {
 			{
 				JSONObject jsonObject = new JSONObject();
 				DescribedBy describedBy1 = itr.next();
+				if(describedBy1.getName() != null)
 				jsonObject.put("name",describedBy1.getName());
-				jsonObject.put("value",describedBy1.getValue());
+				if(describedBy1.getValue() != null)
+				jsonObject.put("value",describedBy1.getValue());	
+				if(describedBy1.getType() != null)
+				jsonObject.put("type",describedBy1.getType());
+				
 				describedByArray.add(jsonObject);			
 			}
-			product.put("DescribedBy", describedByArray);
-			product.put("type", object.getBody().getManageServiceQualificationRequest().getProduct().getType());
+			product.put("productDetails", describedByArray);
+			product.put("productSpecificationType", object.getBody().getManageServiceQualificationRequest().getProduct().getType());
 			}
 		return product;
 	}
-	
+
 
 }

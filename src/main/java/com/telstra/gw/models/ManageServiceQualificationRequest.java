@@ -13,7 +13,7 @@ public class ManageServiceQualificationRequest {
 	@XmlPath("/serviceQualificationType/text()")
 	private String serviceQualificationType;
 
-	@XmlElement(name = "PhysicalAddress", type=PhysicalAddressDetails.class, namespace= StringConstants.BODY_NAMESPACE)
+	@XmlElement(name = "PhysicalAddress", type=PhysicalAddressDetails.class)
 	@XmlPath("/ServiceQualification/ServiceQualificationComprisedOf/ItemInvolvesLocation/Place/PhysicalAddress")
 	private PhysicalAddressDetails physicalAddressDetails;
 
@@ -29,7 +29,7 @@ public class ManageServiceQualificationRequest {
 	@XmlPath("ServiceQualification/ServiceQualificationComprisedOf/type/text()")
 	private String type;
 
-	@XmlElement(name = "ItemInvolvesProduct",type = Product.class, namespace= StringConstants.BODY_NAMESPACE)
+	@XmlElement(name = "ItemInvolvesProduct",type = Product.class)
 	@XmlPath("/ServiceQualification/ServiceQualificationComprisedOf/ItemInvolvesProduct")
 	private Product product;
 	

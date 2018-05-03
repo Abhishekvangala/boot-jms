@@ -1,13 +1,21 @@
 package com.telstra.gw.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
+@XmlRootElement(name = "DescribedBy")
 public class DescribedBy {
 	
-	@XmlPath("/ServiceQualification/ServiceQualificationComprisedOf/ItemInvolvesProduct/DescribedBy/value/text()")
+	@XmlElement(name = "value")
 	private String value;
-	@XmlPath("/ServiceQualification/ServiceQualificationComprisedOf/ItemInvolvesProduct/DescribedBy/characteristic/name/text()")
+		
+	@XmlPath("Characteristic/name/text()")
 	private String name;
+	
+	@XmlElement(name = "type")
+	private String type;
 	
 	public String getValue() {
 		return value;
@@ -20,6 +28,12 @@ public class DescribedBy {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

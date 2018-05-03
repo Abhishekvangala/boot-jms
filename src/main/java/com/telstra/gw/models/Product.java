@@ -10,13 +10,13 @@ import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 import com.telstra.gw.helper.StringConstants;
 
-@XmlRootElement(name = "ItemInvolvesProduct", namespace= StringConstants.BODY_NAMESPACE)
+@XmlRootElement(name = "ItemInvolvesProduct")
 public class Product {
 	
-	@XmlElement(name = "DescribedBy",type = DescribedBy.class , namespace = StringConstants.BODY_NAMESPACE)
+	@XmlElement(name = "DescribedBy",type = DescribedBy.class)
 	private ArrayList<DescribedBy> describedBy;
 
-	@XmlPath("/ServiceQualification/ServiceQualificationComprisedOf/ItemInvolvesProduct/SpecifiedBy/type/text()")
+	@XmlPath("SpecifiedBy/type/text()")
 	private String type;
 	
 	
