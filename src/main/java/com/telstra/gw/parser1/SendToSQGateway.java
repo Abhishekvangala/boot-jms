@@ -22,19 +22,15 @@ public class SendToSQGateway {
 		JSONObject obj = new JSONObject();
 		obj.clear();
 		if(type.equalsIgnoreCase("NBNLocationID")) {
-			System.out.println("Inside location Id");
 			obj = getJSONObjects.getLocationPayload(envelope);
 		} 
-		else if(type.equalsIgnoreCase("GNAFID")) {
-			System.out.println("Inside GnafId");
+		else if(type.equalsIgnoreCase("GNAFID")) {			
 			obj = getJSONObjects.getGnafIdPayload(envelope);
 		}
-		else if(type.equalsIgnoreCase("SpatialGeocode")) {
-			System.out.println("Inside Geocode");
+		else if(type.equalsIgnoreCase("SpatialGeocode")) {			
 			obj = getJSONObjects.getGeoCodePayload(envelope);
 		}
-		else {
-			System.out.println("Inside PhysicalAddress");
+		else {			
 			obj = getJSONObjects.getPhysicalAddressPayload(envelope);
 		}	
 		return obj;		
