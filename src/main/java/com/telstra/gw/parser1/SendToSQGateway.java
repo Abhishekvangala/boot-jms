@@ -17,8 +17,9 @@ public class SendToSQGateway {
 	 private Environment environment;
 	
 	public JSONObject sendToGateway(SoapXmlEnvelope envelope) {
-		//System.out.println("envelope"+envelope);
-		String type = envelope.getBody().getManageServiceQualificationRequest().getType();
+		
+		String type = null;
+		type = envelope.getBody().getManageServiceQualificationRequest().getType();
 		JSONObject obj = new JSONObject();
 		obj.clear();
 		if(type.equalsIgnoreCase("NBNLocationID")) {

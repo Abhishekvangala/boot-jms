@@ -20,6 +20,7 @@ public class GetJSONObjects {
 		JSONObject product = getProductDetails(object);
 		obj.clear();
 		
+		obj.put("conversationId", object.getHeaders().getSoapHeaders().getId());
 		obj.put("locationId", object.getBody().getManageServiceQualificationRequest().getID());		
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
 		obj.put("product", product);
@@ -32,6 +33,7 @@ public class GetJSONObjects {
 		JSONObject product = getProductDetails(object);
 		obj.clear();
 		
+		obj.put("conversationId", object.getHeaders().getSoapHeaders().getId());
 		obj.put("gnafId", object.getBody().getManageServiceQualificationRequest().getID());
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
 		obj.put("product", product);
@@ -44,6 +46,7 @@ public class GetJSONObjects {
 		JSONObject product = getProductDetails(object);
 		obj.clear();
 		
+		obj.put("conversationId", object.getHeaders().getSoapHeaders().getId());
 		obj.put("latitude", object.getBody().getManageServiceQualificationRequest().getLatitude());
 		obj.put("longitude", object.getBody().getManageServiceQualificationRequest().getLongitude());
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
