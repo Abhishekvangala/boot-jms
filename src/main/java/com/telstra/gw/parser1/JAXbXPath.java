@@ -50,6 +50,7 @@ public class JAXbXPath {
 				boolean status = CommonUtils.validateSoapHeaders(envelope);
 				if (status) {
 					CommonUtils.generateConversationId(envelope, jmsMessage);
+					jsonObject.clear();
 					jsonObject = sendToSQGateway.sendToGateway(envelope);
 					url = sendToSQGateway.getURL(envelope);
 					logger.info("URL " + url);

@@ -18,6 +18,7 @@ public class GetJSONObjects {
 	
 	public JSONObject getLocationPayload(SoapXmlEnvelope object) {
 		JSONObject product = getProductDetails(object);
+		obj.clear();
 		
 		obj.put("locationId", object.getBody().getManageServiceQualificationRequest().getID());		
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
@@ -29,6 +30,7 @@ public class GetJSONObjects {
 	
 	public JSONObject getGnafIdPayload(SoapXmlEnvelope object) {
 		JSONObject product = getProductDetails(object);
+		obj.clear();
 		
 		obj.put("gnafId", object.getBody().getManageServiceQualificationRequest().getID());
 		obj.put("version", object.getHeaders().getSoapHeaders().getServiceVersion());
@@ -40,6 +42,7 @@ public class GetJSONObjects {
 
 	public JSONObject getGeoCodePayload(SoapXmlEnvelope object) {
 		JSONObject product = getProductDetails(object);
+		obj.clear();
 		
 		obj.put("latitude", object.getBody().getManageServiceQualificationRequest().getLatitude());
 		obj.put("longitude", object.getBody().getManageServiceQualificationRequest().getLongitude());
@@ -61,6 +64,7 @@ public class GetJSONObjects {
 		physicalAddressDetails =object.getBody().getManageServiceQualificationRequest().getPhysicalAddressDetails();
 		
 		JSONObject product = getProductDetails(object);
+		obj.clear();
 		
 		createPhysicalAddressPayload("levelNumber", physicalAddressDetails.getLevelNumber());		
 		createPhysicalAddressPayload("roadNumber1", physicalAddressDetails.getRoadNumber1());		
