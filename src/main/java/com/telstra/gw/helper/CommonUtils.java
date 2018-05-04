@@ -46,13 +46,15 @@ public class CommonUtils {
 						: messageId;
 
 				// need to append type of id appended
-				conversationId = "__" + "JMSMessageId";
+				conversationId = "__" + messageId;
 				System.out.println("conversationId :: " + conversationId);
 
 				soapHeaders.setId(conversationId);
+				soapHeaders.setMessageId(messageId);
+				soapHeaders.setCorrelationId(jmsMessage.getCorrelationId());
+				if(jmsMessage.getReplyTo() !=null)
+					soapHeaders.setReplyTo(jmsMessage.getReplyTo().getDestinationTypeAsString());
 			}
 		}
 	}
 }
-
-

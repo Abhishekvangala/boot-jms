@@ -23,7 +23,16 @@ public class SoapHeaders {
 	@XmlElement(name = "serviceVersion", namespace = StringConstants.HEADER_NAMESPACE)
 	private String serviceVersion;
 
+	@XmlElement(name = "timestamp", namespace = StringConstants.HEADER_NAMESPACE)
+	private String timestamp;
+
 	private String id;
+
+	private String messageId;
+
+	private String correlationId;
+
+	private String replyTo;
 
 	public String getTransactionID() {
 		return transactionID;
@@ -71,6 +80,38 @@ public class SoapHeaders {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
+
+	public String getCorrelationId() {
+		return correlationId;
+	}
+
+	public void setCorrelationId(String correlationId) {
+		this.correlationId = correlationId;
+	}
+
+	public String getReplyTo() {
+		return replyTo;
+	}
+
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
 	}
 
 }
