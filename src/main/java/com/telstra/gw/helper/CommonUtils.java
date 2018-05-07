@@ -6,10 +6,13 @@ import javax.xml.soap.SOAPException;
 
 import org.apache.activemq.command.ActiveMQTextMessage;
 
+import org.apache.log4j.Logger;
 import com.telstra.gw.models.SoapHeaders;
 import com.telstra.gw.models.SoapXmlEnvelope;
 
 public class CommonUtils {
+	
+	private static final Logger logger = Logger.getLogger(CommonUtils.class);
 
 	private static boolean isEmpty(String value) {
 		if (value != null && !"".equals(value.trim()))
@@ -47,7 +50,7 @@ public class CommonUtils {
 
 				// need to append type of id appended
 				conversationId += "__" + messageId;
-				System.out.println("conversationId :: " + conversationId);
+				logger.info("conversationId :: " + conversationId);
 
 				soapHeaders.setId(conversationId);
 				soapHeaders.setMessageId(messageId);

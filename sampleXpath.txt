@@ -1,5 +1,0 @@
-//*[local-name()='IncidentTicket']/AccessSeekerInteraction/ID/text()
-//*[local-name()='IncidentTicket']/description/text()
-//*[local-name()='IncidentTicket']/type/text()
-//*[local-name()='IncidentTicket']/severity/text()
-//*[local-name()='IncidentTicket']/category/text()

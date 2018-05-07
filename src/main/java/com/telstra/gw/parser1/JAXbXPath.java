@@ -7,8 +7,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,12 +19,12 @@ import com.telstra.gw.helper.CommonUtils;
 import com.telstra.gw.models.SoapXmlEnvelope;
 
 /**
- * Created by abhishek.vangala on 3/22/2018.
+ * Created by Nikhil,Bhavana,Jayaram on 29/04/2018.
  */
 @Component
 public class JAXbXPath {
 
-	private final Logger logger = LoggerFactory.getLogger(JAXbXPath.class);
+	private static final Logger logger = Logger.getLogger(JAXbXPath.class);
 	
 	@Autowired			
 	public SendToSQGateway sendToSQGateway;
@@ -43,8 +42,7 @@ public class JAXbXPath {
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(testMessage);
 			Object object = unmarshaller.unmarshal(reader);
-			System.out.println("envelope"+object);
-			
+					
 			if (object != null) {
 				SoapXmlEnvelope envelope = (SoapXmlEnvelope) object;
 				boolean status = CommonUtils.validateSoapHeaders(envelope);

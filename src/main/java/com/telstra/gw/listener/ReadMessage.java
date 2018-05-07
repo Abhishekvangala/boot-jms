@@ -14,14 +14,14 @@ import com.telstra.gw.parser1.JAXbXPath;
 
 
 /**
- * Created by orcilia on 21/03/2018.
+ * Created by Nikhil,Bhavana,Jayaram on 29/04/2018.
  */
 @Component
 
 public class ReadMessage {
     @Autowired
     private JAXbXPath jaXbXPath;
-    @JmsListener(destination = "private.queue1") // Source is CBR ;Migration queue; ; Target is B2BGW
+    @JmsListener(destination = "B2BGW-NBNPlus") // Source is CBR ;Migration queue; ; Target is B2BGW
     public void handleMessage(ActiveMQTextMessage jmsMessage){  // XML Message Object is input (Header & Body )
     	System.out.println("Started : "+new Date().getTime());
     	try {
